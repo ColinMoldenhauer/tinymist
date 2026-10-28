@@ -90,6 +90,8 @@ impl EditorServer for ProjectPreviewHandler {
 pub struct PreviewCompileView {
     /// The compiled artifact.
     pub art: LspCompiledArtifact,
+    /// Which item under a click the editor jumps to.
+    pub click_jump: ClickJumpPolicy,
 }
 
 impl tinymist_preview::CompileView for PreviewCompileView {
@@ -164,7 +166,7 @@ impl tinymist_preview::CompileView for PreviewCompileView {
             }
         }
 
-        let hit = select_click_hit(&hits, ClickJumpPolicy::Topmost)?;
+        let hit = select_click_hit(&hits, self.click_jump)?;
         Some((hit.span, hit.span))
     }
 

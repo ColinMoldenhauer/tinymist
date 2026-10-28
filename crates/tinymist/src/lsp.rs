@@ -173,6 +173,11 @@ impl ServerState {
             }
         }
 
+        #[cfg(feature = "preview")]
+        self.project
+            .preview
+            .set_click_jump(self.config.preview.click_jump_target);
+
         if old_config.notify_status != self.config.notify_status {
             self.editor_tx
                 .send(EditorRequest::Config(EditorActorConfig {

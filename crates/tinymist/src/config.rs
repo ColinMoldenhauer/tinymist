@@ -19,7 +19,7 @@ use task::{FormatUserConfig, FormatterConfig};
 use tinymist_l10n::DebugL10n;
 use tinymist_project::{DynAccessModel, LspAccessModel};
 use tinymist_query::analysis::{Modifier, TokenType};
-use tinymist_query::{url_to_path, CompletionFeat, PositionEncoding};
+use tinymist_query::{url_to_path, ClickJumpPolicy, CompletionFeat, PositionEncoding};
 use tinymist_render::PeriscopeArgs;
 use tinymist_std::error::prelude::*;
 use tinymist_task::ExportTarget;
@@ -1236,6 +1236,9 @@ pub struct PreviewFeat {
     /// Whether to enable partial rendering.
     #[serde(default, deserialize_with = "deserialize_null_default")]
     pub partial_rendering: bool,
+    /// Which item under a click in the preview the editor jumps to.
+    #[serde(default, deserialize_with = "deserialize_null_default")]
+    pub click_jump_target: ClickJumpPolicy,
     /// Invert colors for the preview.
     #[cfg(feature = "preview")]
     #[serde(default, deserialize_with = "deserialize_null_default")]
@@ -1717,6 +1720,8 @@ mod tests {
         test_good_config("preview.background.args");
         test_good_config("preview.refresh");
         test_good_config("preview.partialRendering");
+        let c = test_good_config("preview.clickJumpTarget");
+        assert_eq!(c.preview.click_jump_target, ClickJumpPolicy::Topmost);
         #[cfg(feature = "preview")]
         let c = test_good_config("preview.invertColors");
         #[cfg(feature = "preview")]

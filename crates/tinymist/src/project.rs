@@ -149,6 +149,9 @@ impl ServerState {
         #[cfg(feature = "preview")] preview: ProjectPreviewState,
         #[cfg(all(not(feature = "system"), feature = "web"))] resolve_fn: js_sys::Function,
     ) -> ProjectState {
+        #[cfg(feature = "preview")]
+        preview.set_click_jump(config.preview.click_jump_target);
+
         let const_config = &config.const_config;
         let mut completion_feat = config.completion.clone();
         completion_feat.insert_replace_edit = const_config.completion_insert_replace_support;
@@ -415,6 +418,9 @@ pub struct ProjectPreviewState {
     /// The inner state.
     #[cfg(feature = "preview")]
     pub(crate) inner: Arc<Mutex<FxHashMap<ProjectInsId, Arc<tinymist_preview::CompileWatcher>>>>,
+    /// Which item under a click in the preview the editor jumps to.
+    #[cfg(feature = "preview")]
+    pub(crate) click_jump: Arc<Mutex<tinymist_query::ClickJumpPolicy>>,
 }
 
 #[cfg(feature = "preview")]
@@ -447,6 +453,17 @@ impl ProjectPreviewState {
     #[must_use]
     pub fn get(&self, task_id: &ProjectInsId) -> Option<Arc<tinymist_preview::CompileWatcher>> {
         self.inner.lock().get(task_id).cloned()
+    }
+
+    /// Gets which item under a click in the preview the editor jumps to.
+    #[must_use]
+    pub fn click_jump(&self) -> tinymist_query::ClickJumpPolicy {
+        *self.click_jump.lock()
+    }
+
+    /// Sets which item under a click in the preview the editor jumps to.
+    pub fn set_click_jump(&self, policy: tinymist_query::ClickJumpPolicy) {
+        *self.click_jump.lock() = policy;
     }
 }
 
@@ -778,7 +795,11 @@ impl CompileHandler<LspCompilerFeat, ProjectInsStateExt> for CompileHandlerImpl 
         #[cfg(feature = "preview")]
         if let Some(inner) = self.preview.get(art.id()) {
             let art = art.clone();
-            inner.notify_compile(Arc::new(crate::tool::preview::PreviewCompileView { art }));
+            let click_jump = self.preview.click_jump();
+            inner.notify_compile(Arc::new(crate::tool::preview::PreviewCompileView {
+                art,
+                click_jump,
+            }));
         } else {
             log::debug!("Project: no preview for {:?}", art.id());
         }

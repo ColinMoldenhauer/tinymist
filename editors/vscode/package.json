@@ -887,6 +887,20 @@
           "type": "boolean",
           "default": true
         },
+        "tinymist.preview.clickJumpTarget": {
+          "title": "%extension.tinymist.config.tinymist.preview.clickJumpTarget.title%",
+          "markdownDescription": "%extension.tinymist.config.tinymist.preview.clickJumpTarget.desc%",
+          "type": "string",
+          "enum": [
+            "topmost",
+            "project"
+          ],
+          "default": "topmost",
+          "enumDescriptions": [
+            "%extension.tinymist.config.tinymist.preview.clickJumpTarget.string.enum.topmost%",
+            "%extension.tinymist.config.tinymist.preview.clickJumpTarget.string.enum.project%"
+          ]
+        },
         "tinymist.preview.invertColors": {
           "title": "%extension.tinymist.config.tinymist.preview.invertColors.title%",
           "markdownDescription": "%extension.tinymist.config.tinymist.preview.invertColors.desc%",

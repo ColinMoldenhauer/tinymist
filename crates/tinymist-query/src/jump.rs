@@ -159,7 +159,8 @@ pub struct JumpCandidate {
 }
 
 /// How to pick one of the items under a click.
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum ClickJumpPolicy {
     /// The item painted last (on top).
     #[default]

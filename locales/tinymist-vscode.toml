@@ -1588,6 +1588,22 @@ zh = "预览部分渲染"
 en = "Only render visible part of the document. This can improve performance but still being experimental."
 zh = "仅呈现文档的可见部分。这可以提高性能，但仍处于实验阶段。"
 
+[extension.tinymist.config.tinymist.preview.clickJumpTarget.title]
+en = "Preview Click Jump Target"
+zh = "预览点击跳转目标"
+
+[extension.tinymist.config.tinymist.preview.clickJumpTarget.desc]
+en = "Which item under a click in the preview the editor jumps to. Items are checked from the one painted on top downwards."
+zh = "点击预览时编辑器跳转到的元素。元素按绘制顺序从最上层向下检查。"
+
+[extension.tinymist.config.tinymist.preview.clickJumpTarget.string.enum.topmost]
+en = "Jump to the source of the topmost item under the click, even if it is in a package"
+zh = "跳转到点击处最上层元素的源码，即使它位于包中"
+
+[extension.tinymist.config.tinymist.preview.clickJumpTarget.string.enum.project]
+en = "Jump to the source of the topmost item under the click that is in the project, skipping items from packages"
+zh = "跳转到点击处位于项目中的最上层元素的源码，跳过来自包的元素"
+
 [extension.tinymist.config.tinymist.preview.invertColors.title]
 en = "Preview Invert Colors"
 zh = "预览反色"
