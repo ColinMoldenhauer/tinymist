@@ -8,7 +8,7 @@ use tinymist_preview::{
     CompileStatus, DocToSrcJumpInfo, EditorServer, Location, MemoryFiles, MemoryFilesShort,
 };
 use tinymist_project::LspCompiledArtifact;
-use tinymist_query::{jump_from_click, jump_from_cursor};
+use tinymist_query::{click_hits, jump_from_cursor, select_click_hit, ClickJumpPolicy};
 use typst::introspection::PagedPosition as Position;
 use typst::layout::{Abs, Point};
 use typst::syntax::{LinkedNode, Source, Span, SyntaxKind};
@@ -148,7 +148,24 @@ impl tinymist_preview::CompileView for PreviewCompileView {
         let page = doc.pages().get(page)?;
 
         let click = Point::new(Abs::pt(pos.x as f64), Abs::pt(pos.y as f64));
-        jump_from_click(world, &page.frame, click)
+
+        let hits = click_hits(world, &page.frame, click);
+        if log::log_enabled!(log::Level::Debug) {
+            for (order, hit) in hits.iter().enumerate() {
+                log::debug!(
+                    "PreviewCompileView: click hit #{order} {:?} depth={} project={}",
+                    hit.kind,
+                    hit.depth,
+                    hit.is_project(),
+                );
+                for candidate in hit.candidates(world) {
+                    log::debug!("PreviewCompileView:   candidate {candidate:?}");
+                }
+            }
+        }
+
+        let hit = select_click_hit(&hits, ClickJumpPolicy::Topmost)?;
+        Some((hit.span, hit.span))
     }
 
     fn resolve_document_position(&self, loc: Location) -> Vec<Position> {

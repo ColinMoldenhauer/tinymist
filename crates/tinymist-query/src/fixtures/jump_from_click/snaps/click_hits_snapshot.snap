@@ -1,0 +1,57 @@
+---
+source: crates/tinymist-query/src/jump.rs
+expression: out
+input_file: crates/tinymist-query/src/fixtures/jump_from_click/slide_header.typ
+---
+page 1 text "Soil properties"
+  #0 Glyph depth=1 project
+      Leaf  /s0.typ:7:21 len=7
+      Call text /s0.typ:7:3 len=26
+      Call stack /s0.typ:5:37 len=70
+      Closure slide-header /s0.typ:5:6 len=101
+      Definition slide-header /s0.typ:5:2 len=105
+page 1 text "Distributions"
+  #0 Glyph depth=2 project
+      Leaf  /s0.typ:21:21 len=13
+      Call image-slide /s0.typ:21:2 len=52
+page 1 rect
+  #0 Shape depth=2 project
+      Leaf  /s0.typ:16:5 len=55
+      Call grid /s0.typ:12:3 len=150
+      Closure image-slide /s0.typ:11:6 len=192
+      Definition image-slide /s0.typ:11:2 len=196
+page 1 text "body as string"
+  #0 Glyph depth=2 project
+      Leaf  /s0.typ:16:55 len=4
+      Call rect /s0.typ:16:5 len=55
+      Call grid /s0.typ:12:3 len=150
+      Closure image-slide /s0.typ:11:6 len=192
+      Definition image-slide /s0.typ:11:2 len=196
+  #1 Shape depth=2 project
+      Leaf  /s0.typ:16:5 len=55
+      Call grid /s0.typ:12:3 len=150
+      Closure image-slide /s0.typ:11:6 len=192
+      Definition image-slide /s0.typ:11:2 len=196
+page 2 text "Soil properties"
+  #0 Glyph depth=1 project
+      Leaf  /s0.typ:23:16 len=4
+      Call image-slide /s0.typ:23:2 len=56
+page 2 text "Distributions"
+  #0 Glyph depth=2 project
+      Leaf  /s0.typ:23:24 len=13
+      Call image-slide /s0.typ:23:2 len=56
+page 2 rect
+  #0 Shape depth=2 project
+      Leaf  /s0.typ:16:5 len=55
+      Call grid /s0.typ:12:3 len=150
+      Closure image-slide /s0.typ:11:6 len=192
+      Definition image-slide /s0.typ:11:2 len=196
+page 2 text "body as content"
+  #0 Glyph depth=2 project
+      Leaf  /s0.typ:23:41 len=15
+      Call image-slide /s0.typ:23:2 len=56
+  #1 Shape depth=2 project
+      Leaf  /s0.typ:16:5 len=55
+      Call grid /s0.typ:12:3 len=150
+      Closure image-slide /s0.typ:11:6 len=192
+      Definition image-slide /s0.typ:11:2 len=196
